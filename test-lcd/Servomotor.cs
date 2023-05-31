@@ -22,9 +22,8 @@ namespace test_lcd
             this.servo = new ServoController(this.pwmController, this.pin);
         }
 
-        public void testServo()
+        public void rotate()
         {
-            Debug.WriteLine("Moteur activé");
 
             servo.Set(0); // 0 degree
 

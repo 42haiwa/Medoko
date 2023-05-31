@@ -58,10 +58,15 @@ namespace test_lcd
 
             bool turning = true;
 
+            FSR02 fsr = new FSR02(); // Capteur de pesée
+            WifiDriver wifiDriver = new WifiDriver();
+
             while (true) 
             {
                 LcdManager.DrawScreen(n_menu, Display);
                 Thread.Sleep(1000);
+                
+                fsr.ReadValue();
 
                 if (/*notTake || */TakingTimeManager.TakingAlert(DateTime.UtcNow))
                 {
@@ -69,7 +74,7 @@ namespace test_lcd
 
                     if (turning)
                     {
-                        servomotor.testServo();
+                        servomotor.rotate();
                     }
 
                     turning = false;
@@ -88,17 +93,6 @@ namespace test_lcd
                 }
                 
                 //buzzer.playMusic();
-
-                Debug.WriteLine("Menu: " + n_menu);
-
-                Debug.Write("\n");
-
-                for (int i = 0; i < TakingTimeManager.takingTimes.Length; i++) 
-                {
-                    Debug.WriteLine(TakingTimeManager.takingTimes[i].ToString());
-                }
-
-                Debug.WriteLine('\n' + TakingTimeManager.lNextHour.ToString()  + '\n');
             }
 
             void initDisplay()
